@@ -107,14 +107,14 @@ pub fn HeapDefine(comptime T: type, comptime Context: type, comptime compareFn: 
             idx = last2; 
             // std.debug.print("idx = {}\n", .{ idx }); 
             while (true) { 
-                self.SiftDown(array, idx); 
+                self.siftDown(array, idx); 
                 if (idx == 0) {
                     break ; 
                 } 
                 idx -= 1; 
             }
         }
-        pub fn SiftDown(self: Self, array: []T, idx: usize) void {
+        pub fn siftDown(self: Self, array: []T, idx: usize) void {
             std.debug.assert(idx < array.len); 
             const current = newIndex(idx); 
             const son = subLeftmostSon(current); 
@@ -134,9 +134,9 @@ pub fn HeapDefine(comptime T: type, comptime Context: type, comptime compareFn: 
             }
             // std.debug.print("swap [{}]={}, [{}]={}\n", .{ idx, array[idx], nowMinimumIdx, array[nowMinimumIdx] }); 
             std.mem.swap(T, &array[idx], &array[nowMinimumIdx]); 
-            return SiftDown(self, array, nowMinimumIdx); 
+            return siftDown(self, array, nowMinimumIdx); 
         }
-        pub fn SiftUp(self: Self, array: []T, idx: usize) void {
+        pub fn siftUp(self: Self, array: []T, idx: usize) void {
             if (idx == 0) {
                 return ; 
             }
@@ -144,7 +144,7 @@ pub fn HeapDefine(comptime T: type, comptime Context: type, comptime compareFn: 
             const compare = compareFn(self.ctx, array[parentIdx], array[idx]); 
             if (compare == .gt) {
                 std.mem.swap(T, &array[parentIdx], &array[idx]); 
-                return SiftUp(self, array, parentIdx); 
+                return siftUp(self, array, parentIdx); 
             }
         } 
     }; 
