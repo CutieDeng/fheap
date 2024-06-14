@@ -8,7 +8,7 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
 
     const fheap_module = b.addModule("fheap", .{ 
-        .root_source_file = .{ .path = "src/root.zig" }, 
+        .root_source_file = .{ .src_path = .{ .owner = b, .sub_path = "src/root.zig" } }, 
     }); 
 
     const exe = b.addExecutable(.{
